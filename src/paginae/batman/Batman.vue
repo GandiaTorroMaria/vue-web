@@ -27,26 +27,27 @@ const scrollToSection=(sectionId: string)=> {
 
 <template>
   <div class="batman">
-  <div class="extra-nav" >
+
+  <nav class="extra-nav flex flex-col sm:flex-row justify-between px-3" >
    <RouterLink to="/">
       <House class="icon-home"></House>
     </RouterLink>
 
     <NavigationMenu>
-      <NavigationMenuList>
+      <NavigationMenuList class="flex flex-col sm:flex-row">
         <NavigationMenuItem>
           <a href="#" @click.prevent="scrollToSection('#')">
-            <NavigationMenuLink>
+            <NavigationMenuLink: class="[navigationMenuTriggerStyle(), 'text-md hover:bg-brand-purple hover:text-white transition-colors']">
               Portada
-            </NavigationMenuLink>
+            </NavigationMenuLink:>
           </a>
         </NavigationMenuItem>
 
         <NavigationMenuItem>
           <a href="#" @click.prevent="scrollToSection('#vehiculis')">
-            <NavigationMenuLink>
+            <NavigationMenuLink:>
               Vehículos
-            </NavigationMenuLink>
+            </NavigationMenuLink: class="[navigationMenuTriggerStyle(), 'text-md hover:bg-brand-purple hover:text-white transition-colors']">
           </a>
         </NavigationMenuItem>
 
@@ -69,7 +70,7 @@ const scrollToSection=(sectionId: string)=> {
       </NavigationMenuList>
     </NavigationMenu>
 
-    </div>
+    </nav>
    
 
     <header class="titulus">
