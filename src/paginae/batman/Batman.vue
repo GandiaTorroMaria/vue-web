@@ -1,161 +1,114 @@
 
 <script lang="ts" setup>
-import { House } from '@lucide/vue';
+import { House } from '@lucide/vue'
+import CarrusImaginum from '@/components/CarrusImaginum.vue'
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu'
 
-import { Card, CardContent } from '@/components/ui/card'
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/ui/carousel'
-
-import Autoplay from 'embla-carousel-autoplay'
-
-const scrollToSection=(sectionId: string)=> {
-  if(sectionId ==="#"){
-    window.scrollTo({ top: 0, behavior: "smooth"});
-    return
-  }
-
-  const element = document.querySelector<HTMLElement>(sectionId);
-
-  if (element) {
-    element.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-}
-
-const photos = ["justice", "arkham", "superman", "varios", "villana", "villano", "grupo", "robin", "anne", "joker", "resplandor", "cat", "gafas", "league", "fondoVerde"]; 
+import { scrollToSection } from '@/utils/srcollToSection'
 
 
+
+const photos = ["justice", "arkham", "superman", "varios", "villana", "villano", "grupo", "robin", "anne", "joker", "resplandor", "cat", "gafas", "league", "fondoVerde"]
 </script>
-
 
 <template>
   <div class="batman">
 
-  <nav class="extra-nav flex flex-col sm:flex-row justify-between px-3" >
-   <RouterLink to="/">
-      <House class="icon-home"></House>
-    </RouterLink>
+    <nav class="extra-nav flex flex-col sm:flex-row justify-between px-3">
+      <RouterLink to="/">
+        <House class="icon-home"></House>
+      </RouterLink>
 
-    <NavigationMenu>
-      <NavigationMenuList class="flex flex-col sm:flex-row">
-        <NavigationMenuItem>
-          <a href="#" @click.prevent="scrollToSection('#')">
-            <NavigationMenuLink: class="[navigationMenuTriggerStyle(), 'text-md hover:bg-brand-purple hover:text-white transition-colors']">
-              Portada
-            </NavigationMenuLink:>
-          </a>
-        </NavigationMenuItem>
+      <NavigationMenu>
+        <NavigationMenuList class="flex flex-col sm:flex-row">
+          <NavigationMenuItem>
+            <a href="#" @click.prevent="scrollToSection('#')">
+              <NavigationMenuLink :class="navigationMenuTriggerStyle()">
+                Portada
+              </NavigationMenuLink>
+            </a>
+          </NavigationMenuItem>
 
-        <NavigationMenuItem>
-          <a href="#" @click.prevent="scrollToSection('#vehiculis')">
-            <NavigationMenuLink:>
-              Vehículos
-            </NavigationMenuLink: class="[navigationMenuTriggerStyle(), 'text-md hover:bg-brand-purple hover:text-white transition-colors']">
-          </a>
-        </NavigationMenuItem>
+          <NavigationMenuItem>
+            <a href="#" @click.prevent="scrollToSection('#vehiculis')">
+              <NavigationMenuLink :class="navigationMenuTriggerStyle()">
+                Vehículos
+              </NavigationMenuLink>
+            </a>
+          </NavigationMenuItem>
 
-        <NavigationMenuItem>
-          <a href="#videre">
-          <NavigationMenuLink: class="navigationMenuTriggersStyle()">
-            Imágenes
-          </NavigationMenuLink:>
-          </a>
-        </NavigationMenuItem>
+          <NavigationMenuItem>
+            <a href="#videre" @click.prevent="scrollToSection('#videre')">
+              <NavigationMenuLink :class="navigationMenuTriggerStyle()">
+                Imágenes
+              </NavigationMenuLink>
+            </a>
+          </NavigationMenuItem>
 
-        <NavigationMenuItem>
-          <a href="#contactus">
-          <NavigationMenuLink: class="navigationMenuTriggersStyle()">
-            Contacto
-          </NavigationMenuLink:>
-          </a>
-        </NavigationMenuItem>
-
-      </NavigationMenuList>
-    </NavigationMenu>
-
+          <NavigationMenuItem>
+            <a href="#contactus" @click.prevent="scrollToSection('#contactus')">
+              <NavigationMenuLink :class="navigationMenuTriggerStyle()">
+                Contacto
+              </NavigationMenuLink>
+            </a>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
     </nav>
-   
 
     <header class="titulus">
       <h1>Batman</h1>
       <div id="titulus-batman" class="titulus-img"></div>
       <p>Él puede tomar la decisión que nadie más puede, la decisión correcta.</p>
     </header>
+
     <section id="vehiculis">
       <div class="vehiculis-arca">
         <div class="item unus">
-            <div class="notitia">
-              <h2>Avión</h2>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vehicula vulputate elit eget fermentum. Ut laoreet ante lacus. Quisque ut tincidunt metus. Curabitur congue, arcu nec tempus sodales, neque sem ultrices mauris, eu tincidunt nibh nibh eu massa. Aenean rhoncus quis nibh ac facilisis.</p>
-              <small>Fabricado en 2005</small>
-            </div>
-            <img src="/imagines/batman/avion.jpg"/>
+          <div class="notitia">
+            <h2>Avión</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vehicula vulputate elit eget fermentum. Ut laoreet ante lacus. Quisque ut tincidunt metus. Curabitur congue, arcu nec tempus sodales, neque sem ultrices mauris, eu tincidunt nibh nibh eu massa. Aenean rhoncus quis nibh ac facilisis.</p>
+            <small>Fabricado en 2005</small>
           </div>
-
-          <div class="item duo">
-            <div class="notitia">
-              <h2>Moto</h2>
-              <p>Nulla aliquip cupidatat voluptate veniam nostrud aliquip sit enim officia. Sit eu pariatur officia qui dolor adipisicing cupidatat. Sit consectetur et eu ut esse laboris nulla.</p>
-              <small>Fabricado en 2006</small>
-            </div>
-            <img src="/imagines/batman/moto.jpg"/>
-          </div>
-          
-          <div class="item tribus">
-            <div class="notitia">
-              <h2>Coche</h2>
-              <p>Irure adipisicing est minim eu ad dolor. Eu ea commodo pariatur ut occaecat in cupidatat reprehenderit ut laborum duis. Sunt minim ex fugiat reprehenderit. Lorem consectetur reprehenderit commodo non</p>
-              <small>Fabricado en 2007</small>
-            </div>
-            <img src="/imagines/batman/car.jpg"/>
-          </div>
+          <img src="/imagines/batman/avion.jpg" />
         </div>
 
-        <div class="vehiculis-titulus">
-          <h1>Vehículos de Batman</h1>
+        <div class="item duo">
+          <div class="notitia">
+            <h2>Moto</h2>
+            <p>Nulla aliquip cupidatat voluptate veniam nostrud aliquip sit enim officia. Sit eu pariatur officia qui dolor adipisicing cupidatat. Sit consectetur et eu ut esse laboris nulla.</p>
+            <small>Fabricado en 2006</small>
+          </div>
+          <img src="/imagines/batman/moto.jpg" />
         </div>
+
+        <div class="item tribus">
+          <div class="notitia">
+            <h2>Coche</h2>
+            <p>Irure adipisicing est minim eu ad dolor. Eu ea commodo pariatur ut occaecat in cupidatat reprehenderit ut laborum duis. Sunt minim ex fugiat reprehenderit. Lorem consectetur reprehenderit commodo non</p>
+            <small>Fabricado en 2007</small>
+          </div>
+          <img src="/imagines/batman/car.jpg" />
+        </div>
+      </div>
+
+      <div class="vehiculis-titulus">
+        <h1>Vehículos de Batman</h1>
+      </div>
     </section>
 
     <section id="videre" class="flex w-full justify-center min-h-[60vh] lg:min-h-[95vh] items-center bg-gray-900">
-      <Carousel class="w-full max-w-md md:max-w-2xl lg:max-w-4xl"
-      :opts="{dragFree: true,
-              loop: true,
-            }"
-      :plugins="[Autoplay({
-            delay: 2000,
-          })]"
-      >
-          <CarouselContent>
-            <CarouselItem v-for="i in photos.length" :key="i">
-              <div class="p-1">
-                <Card class=" bg-gray-900 border-none">
-                  <CardContent 
-                  class="flex aspect-6/4 items-center justify-center p-6"
-                  >
-                   <img 
-                   :src="`/imagines/batman/${photos[i-1]}.jpg`"
-                   class="h-full w-full object-cover"
-                   :alt="`Imagen ${i} de Batman`"
-                   />
-                  </CardContent>
-                </Card> 
-              </div>
-            </CarouselItem>
-          </CarouselContent>
-          <CarouselPrevious class="hidden md:flex justify-center items-center bg-gray-900 text-white"/>
-          <CarouselNext class="hidden md:flex justify-center items-center  bg-gray-900 text-white"/>
-        </Carousel>
+      <CarrusImaginum
+        :photos="photos"
+        basePath="/imagines/batman"
+        :autoplay-delay="1500"
+      />
     </section>
 
   </div>
