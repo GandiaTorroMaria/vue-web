@@ -1,85 +1,74 @@
-
 <script lang="ts" setup>
-import { onMounted, onUnmounted, ref } from 'vue'
-import { House, Menu } from '@lucide/vue'
-import CarrusImaginum from '@/components/CarrusImaginum.vue'
+import { onMounted, onUnmounted, ref } from "vue";
+import { House, Menu } from "@lucide/vue";
+import CarrusImaginum from "@/components/CarrusImaginum.vue";
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
   navigationMenuTriggerStyle,
-} from '@/components/ui/navigation-menu'
+} from "@/components/ui/navigation-menu";
 
-import { scrollToSection } from '@/utils/srcollToSection'
+import { scrollToSection } from "@/utils/srcollToSection";
 
-import { Toggle } from '@/components/ui/toggle'
+import { Toggle } from "@/components/ui/toggle";
 
+import { useMouseMotio } from "@/composables/useMouseMotio";
 
+const photos = [
+  "justice",
+  "arkham",
+  "superman",
+  "varios",
+  "villana",
+  "villano",
+  "grupo",
+  "robin",
+  "anne",
+  "joker",
+  "resplandor",
+  "cat",
+  "gafas",
+  "league",
+  "fondoVerde",
+];
 
+const { mousePositione, cumMouseMove, cumMouseLeave } = useMouseMotio();
 
-const photos = ["justice", "arkham", "superman", "varios", "villana", "villano", "grupo", "robin", "anne", "joker", "resplandor", "cat", "gafas", "league", "fondoVerde"]
-
-interface Cordinatas {
-  x: number
-  y: number 
-}
-
-const videreMenu = ref<boolean>(true)
-
-const mousePosition = ref({ x: 0, y: 0 })
+const videreMenu = ref<boolean>(true);
 
 const handleResize = () => {
   if (window.innerWidth <= 640) {
-    videreMenu.value = false
+    videreMenu.value = false;
   } else {
-    videreMenu.value = true
+    videreMenu.value = true;
   }
-}
+};
 
 onMounted(() => {
-  handleResize()
-  window.addEventListener('resize', handleResize)
-})
+  handleResize();
+  window.addEventListener("resize", handleResize);
+});
 
 onUnmounted(() => {
-  window.removeEventListener('resize', handleResize)
-})
-
-const cumMouseMove = (e: MouseEvent) => {
-  const rect = (e.target as HTMLElement).getBoundingClientRect()
-  const centerX = rect.left + rect.width / 2
-  const centerY = rect.top + rect.height / 2
- 
-
-  const mouseX = e.clientX - rect.left
-  const mouseY = e.clientY - rect.top
-
-  mousePosition.value = {
-    x: (centerX - mouseX) * 0.1,
-    y: (centerY - mouseY) * 0.1,
-  }
-}
-const cumMouseLeave = () =>{
-  x: 0;
-  y: 0;
-}
-
-
-
+  window.removeEventListener("resize", handleResize);
+});
 </script>
 
 <template>
   <div class="batman">
-
-     <Toggle
+    <Toggle
       class="fixed top-2 right-4 z-50 bg-slate-500 sm:hidden"
-      @click="videreMenu= !videreMenu"
-     >
+      @click="videreMenu = !videreMenu"
+    >
       <Menu />
-     </Toggle>
+    </Toggle>
 
-    <nav v-if="videreMenu" class="extra-nav flex flex-col sm:flex-row justify-between px-3">
+    <nav
+      v-if="videreMenu"
+      class="extra-nav flex flex-col sm:flex-row justify-between px-3"
+    >
       <RouterLink to="/">
         <House class="icon-home"></House>
       </RouterLink>
@@ -123,14 +112,16 @@ const cumMouseLeave = () =>{
 
     <header class="titulus">
       <h1>Batman</h1>
-      <div id="titulus-batman" class="titulus-img"
-      @mousemove="cumMouseMove"
-      @mouseleave="cumMouseLeave"
-      :style="{
-      backgroundPositionX: `calc(50% + ${mousePosition.x}px)`,
-      backgroundPositionY: `calc(50% + ${mousePosition.y}px)`,
-      transition: 'background-position 0.1s ease-out'
-      }"
+      <div
+        id="titulus-batman"
+        class="titulus-img"
+        @mousemove="cumMouseMove"
+        @mouseleave="cumMouseLeave"
+        :style="{
+          backgroundPositionX: `calc(50% + ${mousePositione.x}px)`,
+          backgroundPositionY: `calc(50% + ${mousePositione.y}px)`,
+          transition: 'background-position 0.1s ease-out',
+        }"
       ></div>
       <p>Él puede tomar la decisión que nadie más puede, la decisión correcta.</p>
     </header>
@@ -140,7 +131,12 @@ const cumMouseLeave = () =>{
         <div class="item unus">
           <div class="notitia">
             <h2>Avión</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vehicula vulputate elit eget fermentum. Ut laoreet ante lacus. Quisque ut tincidunt metus. Curabitur congue, arcu nec tempus sodales, neque sem ultrices mauris, eu tincidunt nibh nibh eu massa. Aenean rhoncus quis nibh ac facilisis.</p>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vehicula
+              vulputate elit eget fermentum. Ut laoreet ante lacus. Quisque ut tincidunt
+              metus. Curabitur congue, arcu nec tempus sodales, neque sem ultrices mauris,
+              eu tincidunt nibh nibh eu massa. Aenean rhoncus quis nibh ac facilisis.
+            </p>
             <small>Fabricado en 2005</small>
           </div>
           <img src="/imagines/batman/avion.jpg" />
@@ -149,7 +145,11 @@ const cumMouseLeave = () =>{
         <div class="item duo">
           <div class="notitia">
             <h2>Moto</h2>
-            <p>Nulla aliquip cupidatat voluptate veniam nostrud aliquip sit enim officia. Sit eu pariatur officia qui dolor adipisicing cupidatat. Sit consectetur et eu ut esse laboris nulla.</p>
+            <p>
+              Nulla aliquip cupidatat voluptate veniam nostrud aliquip sit enim officia.
+              Sit eu pariatur officia qui dolor adipisicing cupidatat. Sit consectetur et
+              eu ut esse laboris nulla.
+            </p>
             <small>Fabricado en 2006</small>
           </div>
           <img src="/imagines/batman/moto.jpg" />
@@ -158,7 +158,11 @@ const cumMouseLeave = () =>{
         <div class="item tribus">
           <div class="notitia">
             <h2>Coche</h2>
-            <p>Irure adipisicing est minim eu ad dolor. Eu ea commodo pariatur ut occaecat in cupidatat reprehenderit ut laborum duis. Sunt minim ex fugiat reprehenderit. Lorem consectetur reprehenderit commodo non</p>
+            <p>
+              Irure adipisicing est minim eu ad dolor. Eu ea commodo pariatur ut occaecat
+              in cupidatat reprehenderit ut laborum duis. Sunt minim ex fugiat
+              reprehenderit. Lorem consectetur reprehenderit commodo non
+            </p>
             <small>Fabricado en 2007</small>
           </div>
           <img src="/imagines/batman/car.jpg" />
@@ -170,214 +174,208 @@ const cumMouseLeave = () =>{
       </div>
     </section>
 
-    <section id="videre" class="flex w-full justify-center min-h-[60vh] lg:min-h-[95vh] items-center bg-gray-900">
+    <section
+      id="videre"
+      class="flex w-full justify-center min-h-[60vh] lg:min-h-[95vh] items-center bg-gray-900"
+    >
       <CarrusImaginum
         :photos="photos"
         basePath="/imagines/batman"
         :autoplay-delay="1500"
       />
     </section>
-
   </div>
 </template>
 
-
 <style scoped>
+.batman {
+  font-family: "Arial, Helvetica, sans-sherif";
+}
 
-  .batman{
+.icon-home {
+  color: slateblue;
+  width: 3rem;
+  height: 3rem;
+}
 
-    font-family: 'Arial, Helvetica, sans-sherif'
+.extra-nav {
+  background-color: white;
+  opacity: 0.7;
+  box-shadow: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  top: 0;
+  width: 11rem;
+  border-radius: 0 0 1rem 0;
+  z-index: 1;
+}
 
-  }
-
-  .icon-home{
-    color:slateblue;
-    width: 3rem;
-    height: 3rem;
-  }
-
+@media (min-width: 640px) {
   .extra-nav {
-    background-color: white;
-    opacity: 0.7;
-    box-shadow: rgba(0, 0, 0, 0.7);
-    position: fixed;
-    top: 0;
-    width: 11rem;
-    border-radius: 0 0 1rem 0;
-    z-index: 1;
+    width: 100%;
+    border-radius: 0;
+    opacity: 1;
+    left: 0;
   }
+}
 
-  @media (min-width: 640px){
-   .extra-nav {
-     width: 100%;
-      border-radius: 0;
-      opacity: 1;
-      left: 0;
-    }
-  }
+.icon-home:hover {
+  color: white;
+  background-color: slateblue;
+}
 
-  .icon-home:hover {
-    color:white;
-    background-color: slateblue;
-  }
+.titulus-img {
+  background-size: 100% 100%;
+  background-position: center center;
+  background-image: url("../imagines/batman/batman.jpg");
+  aspect-ratio: 8/7;
+}
 
-  .titulus-img {
-    background-size: 100% 100%;
-    background-position: center center;
-    background-image: url("../imagines/batman/batman.jpg");
-    aspect-ratio: 8/7;
-  }
+.titulus-img:hover {
+  background-size: 115% 115%;
+}
 
-  .titulus-img:hover {
-    background-size: 115% 115%;
+.titulus > h1 {
+  position: absolute;
+  top: calc(100vw * 0.5);
+  width: 100%;
+  text-align: center;
+  font-size: 5rem;
+  color: white;
+  pointer-events: none;
+  font-family: batman;
+}
+
+.titulus > p {
+  position: absolute;
+  top: calc(100vw * 0.25);
+  width: 100%;
+  text-align: center;
+  font-size: 2rem;
+  color: white;
+  pointer-events: none;
+  font-family: batman;
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .titulus > p {
+    display: block;
   }
 
   .titulus > h1 {
-    position: absolute;
-    top: calc(100vw * 0.5);
-    width: 100%;
-    text-align: center;
-    font-size: 5rem; 
     color: white;
-    pointer-events:none; 
-    font-family: batman;
   }
+}
 
-  .titulus > p {
-    position: absolute;
-    top: calc(100vw * 0.25);
-    width: 100%;
-    text-align: center;
-   font-size: 2rem;
-    color: white;
-   pointer-events:none;
-   font-family: batman;
-   display: none;
-  }
+#vehiculis {
+  max-width: 510px;
+  margin: 0 auto;
+  padding: 4rem 0;
+  display: flex;
+  flex-direction: column;
+}
 
-  @media (min-width: 768px) {
-    .titulus > p {
-      display: block;
-    }
+.vehiculis-arca {
+  order: 1;
+  display: flex;
+  flex-direction: column;
+}
 
-    .titulus > h1 {
-      color: white;
-    }
-  }
+.vehiculis-titulus {
+  height: 5.5rem; /* 88px */
+  font-size: 2rem;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  #vehiculis {
-    max-width: 510px;
-    margin: 0 auto;
-    padding: 4rem 0;
-    display: flex;
-    flex-direction: column;
-  }
+.item {
+  padding: 1.5rem 0;
+  height: 540px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
 
-  .vehiculis-arca{
-    order: 1;
-    display:flex;
-    flex-direction:column;
-  }
+.item > img {
+  width: 450px;
+}
+.unus {
+  background-color: rgba(220, 220, 220, 0.2);
+  order: 2;
+}
 
-  .vehiculis-titulus {
-    height: 5.5rem; /* 88px */
-    font-size: 2rem;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    display: flex;
-    justify-content:center;
-    align-items:center;
-  }
+.duo {
+  background-color: rgba(220, 220, 220, 0.8);
+}
 
-  .item {
-    padding: 1.5rem 0;
-    height: 540px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:space-around;
-  }
+.tribus {
+  background-color: rgba(220, 220, 220, 0.8);
+  order: 3;
+}
 
-  .item>img{
-    width:450px;
-  }
-  .unus {
-    background-color: rgba(220, 220, 220, 0.2) ; 
-    order:2;
-  }
+.notitia {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .duo {
-    background-color: rgba(220, 220, 220, 0.8);
-  }
+.notitia > small {
+  font-weight: bold;
+  padding: 1rem;
+}
 
-  .tribus {
-    background-color: rgba(220, 220, 220, 0.8);
-    order:3;
-  }
-
-  .notitia{
-    width:90%;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-  }
-  
-  .notitia > small {
-    font-weight: bold;
-    padding: 1rem;
-  }
-  
-  .notitia > h2 {
-  font-size: 1.7rem; 
+.notitia > h2 {
+  font-size: 1.7rem;
   font-weight: 600;
   color: rgba(0, 0, 0, 0.7);
   padding-bottom: 1rem;
-  } 
+}
 
-  @media (min-width: 640px){
-    #vehiculis{
-      max-width:576px;
-    }
+@media (min-width: 640px) {
+  #vehiculis {
+    max-width: 576px;
+  }
+}
+
+@media (min-width: 778px) {
+  #vehiculis {
+    max-width: 900px;
+  }
+  .item {
+    flex-direction: row;
+    height: 320px;
   }
 
-    @media (min-width: 778px){
-    #vehiculis{
-      max-width:900px;
-    }
-    .item{
-      flex-direction:row;
-      height:320px;
-    }
-
-    .notitia{
-      width: 40%;
-    }
-
-    .unus>img{
-      order: -1;
-    }
-
+  .notitia {
+    width: 40%;
   }
 
-  @media (min-width: 1024px){
-    #vehiculis{
-      max-width:1280px;
-    }
-
-    .item{
-      flex-direction:column;
-      height:560px
-    }
-
-    .vehiculis-arca{
-      flex-direction:row;
-      
-    }
-
-    .notitia{
-      width: 90%;
-    }
+  .unus > img {
+    order: -1;
   }
-  
+}
 
+@media (min-width: 1024px) {
+  #vehiculis {
+    max-width: 1280px;
+  }
+
+  .item {
+    flex-direction: column;
+    height: 560px;
+  }
+
+  .vehiculis-arca {
+    flex-direction: row;
+  }
+
+  .notitia {
+    width: 90%;
+  }
+}
 </style>
