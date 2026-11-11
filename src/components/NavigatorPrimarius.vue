@@ -27,12 +27,13 @@ withDefaults(defineProps<Props>(), {
 
  const videreMenu = ref<boolean>(true);
 
-    const handleResize = () => {
+const handleResize = () => {
   if (window.innerWidth <= 640) {
     videreMenu.value = false;
   } else {
     videreMenu.value = true;
-  }
+    }
+}
 
 onMounted(() => {
   handleResize();
