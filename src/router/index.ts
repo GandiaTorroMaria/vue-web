@@ -3,6 +3,10 @@ import Domus from "../paginae/domus/Domus.vue";
 import Batman from "../paginae/batman/Batman.vue";
 import Primus from "../paginae/simpsons/Primus.vue";
 import Responsum from "../paginae/responsum/Responsum.vue";
+import Layout from "@/paginae/simpsons/Layout.vue";
+import Circa from "@/paginae/simpsons/Circa.vue";
+import Collectione from "@/paginae/simpsons/Collectione.vue";
+import Character from "@/paginae/simpsons/Character.vue";
 
 export const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -10,30 +14,47 @@ export const router = createRouter({
     {
       path: "/",
       name: "home",
-      component: Domus
+      component: Domus,
     },
     {
       path: "/batman",
       name: "batman",
-      component: Batman
+      component: Batman,
     },
     {
       path: "/simpsons",
-      name: "simpsons",
-      component: Primus
+      component: Layout,
+      children: [
+        {
+          path: "",
+          name: "simpsons",
+          component: Primus,
+        },
+        {
+          path: "about",
+          name: "simpsons-about",
+          component: Circa,
+        },
+        {
+          path: "gallery",
+          name: "simpsons-characters",
+          component: Collectione,
+        },
+        {
+          path: "gallery/:id",
+          name: "simpsons-character",
+          component: Character,
+        },
+      ],
     },
     {
       path: "/indecision",
       name: "indecision",
-      component: Responsum
+      component: Responsum,
     },
     {
-      path: '/:pathMatch(.*)*',
-      redirect: '/'
-    }
-  ]
+      path: "/:pathMatch(.*)*",
+      redirect: "/",
+    },
+  ],
 })
-
-
-
-
