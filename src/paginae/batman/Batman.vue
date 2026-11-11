@@ -30,6 +30,7 @@ import { Calendar } from '@/components/ui/calendar'
 import { ref } from 'vue'
 
 import type { DateValue } from 'reka-ui'
+import { Loader, Loader2 } from "@lucide/vue";
 
 const dies = ref<DateValue>()
 
@@ -72,6 +73,34 @@ const menuItems = [
   },
 
 ];
+
+ const estLoading = ref<boolean>(false);
+
+  const nomen = ref<string>("");
+
+  const cognomen = ref<string>("");
+
+  const missio = ref<string>("");
+
+const mittereSubmit = async () => {
+  estLoading.value = true;
+  await new Promise((resolve) => setTimeout(resolve, 2000)); //Envío de datos
+
+  console.log('Formulario enviado:', {
+    nomen: nomen.value,
+    cognomen: cognomen.value,
+    missio: missio.value,
+    dies: dies.value,
+  });
+
+  nomen.value = "";
+  cognomen.value = "";
+  missio.value = "";
+
+   estLoading.value = false;
+};
+
+
 
 </script>
 
@@ -176,23 +205,17 @@ const menuItems = [
               loading="lazy" 
               referrerpolicy="strict-origin-when-cross-origin">
               </iframe>
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.2155710122!2d-73.987844924164!3d40.757985971389!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes%20Square!5e0!3m2!1ses!2ses!4v1710864000000!5m2!1ses!2ses"
-                class="w-full h-full rounded-lg"
-                :style="{ border: 0 }"
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              ></iframe>
             </div>
           </div>
 
                 <!-- Formulario -->
           <div class="w-full max-w-md mx-auto lg:max-w-none lg:w-1/2 ">
-            <form  class="space-y-6 bg-white p-8 rounded-lg shadow-lg aspect-square">
+            <form
+              @submit.prevent="mittereSubmit"
+              class="space-y-6 bg-white p-8 rounded-lg shadow-lg aspect-square">
               <div class="space-y-2">
                 <Label for="nomen">Nombre </Label>
-                <Input id="nomen" required />
+                <Input id="nomen" required v-model="nomen" />
                 
 
               </div>
@@ -200,13 +223,13 @@ const menuItems = [
               <div class="space-y-2">
                   
                 <Label for="cognomen">Apellidos </Label>
-                <Input id="cognomen" required />
+                <Input id="cognomen" required v-model="cognomen" />
 
               </div>
 
               <div class="space-y-2">
 
-                  <Select required>
+                  <Select required v-model="missio">
                     <SelectTrigger>
                       <SelectValue placeholder="Selecciona una misión" />
                     </SelectTrigger>
@@ -247,8 +270,16 @@ const menuItems = [
 
               </div>
 
-              Poner un botón para enviar la solicitud
-                  
+              <Button 
+              type="submit"
+              class ="w-full bg-brand-purple hoover:bg-brand-purple-dark"
+              :disabled="estLoading"
+              >
+                <Loader2 v-if="estLoading" class="mr-2 h-4 w-4 animate-spin" />
+                <span v-if="estLoading"> Enviando... </span>
+                <span v-else> Enviar solicitud </span>
+                
+              </Button>
             </form>
           </div>
         </div>
