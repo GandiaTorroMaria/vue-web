@@ -1,19 +1,9 @@
 <script lang="ts" setup>
-import { onMounted, onUnmounted, ref } from "vue";
-import { House, Menu } from "@lucide/vue";
-import CarrusImaginum from "@/components/CarrusImaginum.vue";
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
+
+import NavigatorPrimarius from "@/components/NavigatorPrimarius.vue";
 
 import { scrollToSection } from "@/utils/srcollToSection";
-
-import { Toggle } from "@/components/ui/toggle";
-
+import CarrusImaginum from "@/components/CarrusImaginum.vue";
 import { useMouseMotio } from "@/composables/useMouseMotio";
 
 const photos = [
@@ -36,79 +26,32 @@ const photos = [
 
 const { mousePositione, cumMouseMove, cumMouseLeave } = useMouseMotio();
 
-const videreMenu = ref<boolean>(true);
+const menuItems = [
+  { label: 'Portada',
+    href: '#',
+    onClick: () => scrollToSection('#')
+  },
+  { label: 'Vehículos',
+    href: '#vehiculis',
+    onClick: () => scrollToSection('#vehiculis')
+  },
+  { label: 'Imágenes',
+    href: '#videre',
+    onClick: () => scrollToSection('#')
+  },
+  { label: 'Contacto',
+    href: '#contactus',
+    onClick: () => scrollToSection('#contactus')
+  },
 
-const handleResize = () => {
-  if (window.innerWidth <= 640) {
-    videreMenu.value = false;
-  } else {
-    videreMenu.value = true;
-  }
-};
+];
 
-onMounted(() => {
-  handleResize();
-  window.addEventListener("resize", handleResize);
-});
-
-onUnmounted(() => {
-  window.removeEventListener("resize", handleResize);
-});
 </script>
 
 <template>
   <div class="batman">
-    <Toggle
-      class="fixed top-2 right-4 z-50 bg-slate-500 sm:hidden"
-      @click="videreMenu = !videreMenu"
-    >
-      <Menu />
-    </Toggle>
-
-    <nav
-      v-if="videreMenu"
-      class="extra-nav flex flex-col sm:flex-row justify-between px-3"
-    >
-      <RouterLink to="/">
-        <House class="icon-home"></House>
-      </RouterLink>
-
-      <NavigationMenu>
-        <NavigationMenuList class="flex flex-col sm:flex-row">
-          <NavigationMenuItem>
-            <a href="#" @click.prevent="scrollToSection('#')">
-              <NavigationMenuLink :class="navigationMenuTriggerStyle()">
-                Portada
-              </NavigationMenuLink>
-            </a>
-          </NavigationMenuItem>
-
-          <NavigationMenuItem>
-            <a href="#" @click.prevent="scrollToSection('#vehiculis')">
-              <NavigationMenuLink :class="navigationMenuTriggerStyle()">
-                Vehículos
-              </NavigationMenuLink>
-            </a>
-          </NavigationMenuItem>
-
-          <NavigationMenuItem>
-            <a href="#videre" @click.prevent="scrollToSection('#videre')">
-              <NavigationMenuLink :class="navigationMenuTriggerStyle()">
-                Imágenes
-              </NavigationMenuLink>
-            </a>
-          </NavigationMenuItem>
-
-          <NavigationMenuItem>
-            <a href="#contactus" @click.prevent="scrollToSection('#contactus')">
-              <NavigationMenuLink :class="navigationMenuTriggerStyle()">
-                Contacto
-              </NavigationMenuLink>
-            </a>
-          </NavigationMenuItem>
-        </NavigationMenuList>
-      </NavigationMenu>
-    </nav>
+    
+    <NavigatorPrimarius:items="menuItems" homeRoute="/" />
 
     <header class="titulus">
       <h1>Batman</h1>
@@ -192,36 +135,6 @@ onUnmounted(() => {
   font-family: "Arial, Helvetica, sans-sherif";
 }
 
-.icon-home {
-  color: slateblue;
-  width: 3rem;
-  height: 3rem;
-}
-
-.extra-nav {
-  background-color: white;
-  opacity: 0.7;
-  box-shadow: rgba(0, 0, 0, 0.7);
-  position: fixed;
-  top: 0;
-  width: 11rem;
-  border-radius: 0 0 1rem 0;
-  z-index: 1;
-}
-
-@media (min-width: 640px) {
-  .extra-nav {
-    width: 100%;
-    border-radius: 0;
-    opacity: 1;
-    left: 0;
-  }
-}
-
-.icon-home:hover {
-  color: white;
-  background-color: slateblue;
-}
 
 .titulus-img {
   background-size: 100% 100%;
