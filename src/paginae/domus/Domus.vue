@@ -11,28 +11,31 @@ import {
 import { Input } from '@/components/ui/input'
 import { ref,  } from 'vue';
 import { useRouter } from 'vue-router';
+import { Heart } from 'lucide-vue-next';
+import { useFavoritosStore } from '@/stores/useFavoritos';
+import { storeToRefs } from 'pinia';
 
+const favoritosStore = useFavoritosStore()
+const { totalFavoritos } = storeToRefs(favoritosStore)
 
 const dialogApertaEst = ref<boolean>(false)
 const quaestio = ref<string>("")
 
-  const router = useRouter()
+const router = useRouter()
 
-  const cumKeyPressumEnter = (eventus: KeyboardEvent) => {
-    if(eventus.key === "Enter"){
-      const textusItinerans = quaestio.value.trim()
+const cumKeyPressumEnter = (eventus: KeyboardEvent) => {
+  if(eventus.key === "Enter"){
+    const textusItinerans = quaestio.value.trim()
 
-      if(textusItinerans.length > 0 && textusItinerans.endsWith("?")) {
-        dialogApertaEst.value = false
-        router.push({
-          path: '/indecision',
-          state: { quaestio: textusItinerans }
-        })
-      }
+    if(textusItinerans.length > 0 && textusItinerans.endsWith("?")) {
+      dialogApertaEst.value = false
+      router.push({
+        path: '/indecision',
+        state: { quaestio: textusItinerans }
+      })
     }
   }
-
-
+}
 </script>
 
 <template>
@@ -94,9 +97,18 @@ const quaestio = ref<string>("")
       <Button variant="domus" class="mr-2">
        <a href="https://www.upv.es">UPV</a>
       </Button>
+      <Button variant="default" class="relative mr-2 bg-simpsons-red md:py-5 md:px-6 md:text-lg hover:bg-simpsons-red/80 transition-all">
+       <RouterLink to="/simpsons/favoritos" class="flex items-center gap-2">
+          <Heart class="w-5 h-5 fill-current" />
+          Favoritos
+          <span class="absolute -top-3 -right-2 w-6.5 h-6.5 bg-yellow-400 text-black text-base font-bold rounded-full flex items-center justify-center">
+            {{ totalFavoritos }}
+          </span>
+       </RouterLink>
+       
+      </Button>
        
     </div>
     
   </div>
 </template>
-

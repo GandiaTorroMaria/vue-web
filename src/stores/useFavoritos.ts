@@ -1,0 +1,21 @@
+
+import { computed, ref } from "vue"
+import { defineStore } from "pinia"
+import { characters, type Character } from "../paginae/simpsons/Data"
+
+export const useFavoritosStore = defineStore('favoritos', () => {
+
+    const favoritos = ref<Character[]>([
+        characters.find(character => character.id === 0)!,
+        characters.find(character => character.id === 4)!,
+        characters.find(character => character.id === 6)!,
+        characters.find(character => character.id === 1)!,
+        characters.find(character => character.id === 2)!,
+    ])  
+
+    return {
+        favoritos,
+        totalFavoritos: computed(() => favoritos.value.length)
+    }
+
+})
